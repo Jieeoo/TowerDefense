@@ -1,6 +1,6 @@
 import pygame
 import math
-class Enemy:
+class Unit:
     imgs = []
 
     def __init__(self, x, y, widht, height):
