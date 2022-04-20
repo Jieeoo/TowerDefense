@@ -22,6 +22,7 @@ class Enemy:
         """
         self.animation_count +=1
         self.img = self.imgs[self.animation_count]
+        ff
 
         if self.animation_count >= len(self.imgs):
             self.animation_count = 0
