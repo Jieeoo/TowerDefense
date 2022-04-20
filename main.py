@@ -41,6 +41,3 @@ class Game:
 
 g= Game()
 g.run()
-
-
-
