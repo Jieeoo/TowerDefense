@@ -11,7 +11,7 @@ class Unit:
         self.animation_count = 0
         self.health = 1
         self.vel = 3
-        self.path = [(1187, 146), (400, 141), (394, 325), (882, 341), (878, 537), (160, 517), (132, 155)]
+        self.path = []
         self.img = None
         self.path_pos = 0
     def draw(self, win):
