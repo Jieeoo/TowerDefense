@@ -18,7 +18,8 @@ class Unit:
         self.dis=0
         self.imgs=[]
         self.pos=((1187, 100))
-        self.flipped = False
+        self.flipped_1 = False
+        self.flipped_2 = False
 
     def draw(self, win):
         """
@@ -95,6 +96,16 @@ class Unit:
             new_pos = pygame.math.Vector2(self.pos) + dir
             pos = (new_pos.x, new_pos.y)
         self.pos=pos
+
+        if pos[0] == 350 and pos[1] >=100 and not(self.flipped_1):
+            self.flipped_1 = True
+            for x, img in enumerate(self.imgs):
+                self.imgs[x] = pygame.transform.flip(img, True, False)
+        elif pos[0] == 850 and pos[1] >=300 and not (self.flipped_2):
+            self.flipped_2 = True
+            for x, img in enumerate(self.imgs):
+                self.imgs[x] = pygame.transform.flip(img, True, False)
+
     def hit(self):
         """
         Returns if a enemy has died and removes one health each call
