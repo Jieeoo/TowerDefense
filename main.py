@@ -18,7 +18,8 @@ class Game:
         clock = pygame.time.Clock()
 
         while run:
-            clock.tick(1)
+            pygame.time.delay(100)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
@@ -26,7 +27,7 @@ class Game:
                 pos = pygame.mouse.get_pos()
             to_del = []
             for en in self.enemys:
-                if en.x == 132 and en.y== 155:
+                if en.pos[0] == 110 and en.pos[1] == 90:
                     to_del.append(en)
             for d in to_del:
                 self.enemys.remove(d)
