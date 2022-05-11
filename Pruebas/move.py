@@ -23,6 +23,7 @@ class Prueba:
             dir.scale_to_length(self.speed)
             new_pos = pygame.math.Vector2(pos) + dir
             pos = (new_pos.x, new_pos.y)
+
         return pos
 
 
