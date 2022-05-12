@@ -1,13 +1,14 @@
 import pygame.display
 import os
 from Enemies.orc import Orc
+from Allies.ArcherTower import ArcherTower
 class Game:
     def __init__(self):
         self.width = 1200
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = [Orc()]
-        self.towers = []
+        self.towers = [ArcherTower(300,300)]
         self.lives = 10
         self.money = 100
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
@@ -32,6 +33,9 @@ class Game:
             for d in to_del:
                 self.enemys.remove(d)
 
+            for tw in self.towers:
+                tw.attack(self.enemys)
+
             self.draw()
         pygame.quit()
 
@@ -40,6 +44,9 @@ class Game:
 
         for en in self.enemys:
             en.draw(self.win)
+
+        for tw in self.towers:
+            tw.draw(self.win)
         pygame.display.update()
 
 
