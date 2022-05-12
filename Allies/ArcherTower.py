@@ -41,7 +41,7 @@ class ArcherTower(Tower):
         if self.left == True:
             add = -25
         else:
-            add = a-archer.get_width()/2
+            add = archer.get_width()/2
         win.blit(archer,((self.x + self.width / 2) - (archer.get_width() / 2), (self.y - archer.get_height() - 25)))
 
     def change_range(self, r):
@@ -63,11 +63,11 @@ class ArcherTower(Tower):
         if len(enemy_closest)>0:
             first_enemy = enemy_closest[0]
 
-            if first_enemy.pos[0] > self.x and not(self.left):
+            if first_enemy.pos[0] < self.x and not(self.left):
                 self.left = True
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img,True,False)
-            elif self.left and first_enemy.pos[0] < self.x:
+            elif self.left and first_enemy.pos[0] > self.x:
                 self.left = False
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
