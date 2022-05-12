@@ -7,7 +7,7 @@ class Unit:
         self.height = 32
         self.animation_count = 0
         self.health = 1
-        self.vel = 15
+        self.vel = 10
         self.path = [(1187, 100), (350, 100), (350, 300), (850, 300), (850, 480), (110, 480), (110, 90)]
         self.x = self.path[0][0]
         self.y = self.path[0][1]
