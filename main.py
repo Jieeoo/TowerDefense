@@ -8,7 +8,7 @@ class Game:
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = [Orc()]
-        self.towers = [ArcherTower(300,300)]
+        self.towers = [ArcherTower(300,300),ArcherTower(300,400)]
         self.lives = 10
         self.money = 100
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
