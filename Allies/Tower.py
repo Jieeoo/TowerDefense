@@ -13,6 +13,7 @@ class Tower:
         self.selected = False
         self.menu = None
         self.tower_imgs = []
+        self.damage = 1
 
     def draw(self, win):
         img = self.tower_imgs[self.level]
@@ -37,6 +38,8 @@ class Tower:
 
     def upgrade(self):
         self.level += 1
+        self.damage += 1
+
 
     def get_ugrade_cost(self):
 

@@ -20,6 +20,7 @@ class Unit:
         self.pos=((1187, 100))
         self.flipped_1 = False
         self.flipped_2 = False
+        self.max_health = 0
 
     def draw(self, win):
         """
@@ -35,7 +36,23 @@ class Unit:
             self.animation_count = 0
 
         win.blit(self.img, (self.pos))
+        self.draw_health_bar(win)
         self.move()
+
+    def draw_health_bar(self, win):
+        """
+        draw health bar above a unit
+        :param win: surface
+        :return: none
+        """
+        length = 50
+        move_by = round(length / self.max_health)
+        health_bar = move_by * self.health
+
+        pygame.draw.rect(win, (255,0,0), (self.x, self.y - 10, length, 10), 0)
+        pygame.draw.rect(win, (0, 255, 0), (self.x, self.y - 10, health_bar, 10), 0)
+
+
 
     def collide(self, x, y):
         """
@@ -106,12 +123,13 @@ class Unit:
             for x, img in enumerate(self.imgs):
                 self.imgs[x] = pygame.transform.flip(img, True, False)
 
-    def hit(self):
+    def hit(self, damage):
         """
         Returns if a enemy has died and removes one health each call
         :return:Bool
         """
 
-        self.health -=1
+        self.health -= damage
         if self.health <= 0:
             return True
+        return False
