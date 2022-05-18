@@ -8,7 +8,8 @@ tower_imgs = []
 archer_imgs = []
 #load archer towers images
 for x in range(3):
-    tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower", "Tower" + str(x) + ".png")),(90, 100)))
+    tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower", "Tower" + str(x) + ".png")),
+                               (90, 100)))
 for x in range(22):
     add_str = str(x)
     if x < 10:
