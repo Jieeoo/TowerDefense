@@ -4,6 +4,8 @@ from Enemies.orc import Orc
 from Enemies.Ent import Ent
 from Allies.ArcherTower import ArcherTower
 from Allies.supportTower import DamageTower, RangeTower
+from Allies.WizardTower import WizardTower
+from Allies.TrebuchetteTower import TrebuchetteTower
 import Unit
 import time
 import random
@@ -17,7 +19,7 @@ class Game:
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = []
-        self.attack_towers = [ArcherTower(300, 400), ArcherTower(725, 400), ArcherTower( 300,100)]
+        self.attack_towers = [TrebuchetteTower(300, 400), ArcherTower(725, 400), WizardTower( 300,150)]
         self.support_towers = [RangeTower(500, 400), DamageTower(300,600)]
         self.lives = 10
         self.money = 100
