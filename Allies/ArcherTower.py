@@ -40,7 +40,7 @@ class ArcherTower(Tower):
             if self.archer_count >= len(self.archer_imgs):
                 self.archer_count = 0
         else:
-            self.archer_count =0
+            self.archer_count = 0
 
         archer = self.archer_imgs[self.archer_count]
         if self.left == True:
