@@ -16,7 +16,7 @@ class Game:
         self.width = 1200
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
-        self.enemys = [Orc(),Ent()]
+        self.enemys = []
         self.attack_towers = [ArcherTower(300, 400), ArcherTower(725, 400), ArcherTower( 300,100)]
         self.support_towers = [RangeTower(500, 400), DamageTower(300,600)]
         self.lives = 10
