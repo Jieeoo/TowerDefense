@@ -49,8 +49,8 @@ class Unit:
         move_by = round(length / self.max_health)
         health_bar = move_by * self.health
 
-        pygame.draw.rect(win, (255,0,0), (self.x, self.y - 10, length, 10), 0)
-        pygame.draw.rect(win, (0, 255, 0), (self.x, self.y - 10, health_bar, 10), 0)
+        pygame.draw.rect(win, (255,0,0), (self.pos[0]+10, self.pos[1]-15, length, 10), 0)
+        pygame.draw.rect(win, (0, 255, 0), (self.pos[0]+10,self.pos[1]-15, health_bar, 10), 0)
 
 
 
