@@ -2,6 +2,7 @@ import pygame.display
 import os
 from Enemies.orc import Orc
 from Enemies.Ent import Ent
+from Enemies.Troll import Troll
 from Allies.ArcherTower import ArcherTower
 from Allies.supportTower import DamageTower, RangeTower
 import Unit
@@ -34,7 +35,7 @@ class Game:
             if time.time() -self.timer> 2:
                 self.timer = time.time()
                 #añadir en la lista el resto de enemigos cuando esten hechos
-                self.enemys.append((random.choice([Orc(), Ent()])))
+                self.enemys.append((random.choice([Orc(), Ent(), Troll()])))
 
             pygame.time.delay(100)
             clock.tick(30)
