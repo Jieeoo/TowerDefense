@@ -10,11 +10,9 @@ archer_imgs = []
 for x in range(3):
     tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower", "Tower" + str(x) + ".png")),
                                (90, 100)))
-for x in range(22):
+for x in range(10):
     add_str = str(x)
-    if x < 10:
-        add_str = "0" + add_str
-    archer_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Shoot_Stand", "shoot_stand_0" + add_str + ".png")), (32, 32)))
+    archer_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower_NPC/Archer_imgs", "Elf_01__ATTACK_00" + str(x) + ".png")), (256, 128)))
 
 
 class ArcherTower(Tower):
@@ -47,7 +45,7 @@ class ArcherTower(Tower):
             add = -25
         else:
             add = archer.get_width()/2
-        win.blit(archer,((self.x + self.width / 2) - (archer.get_width() / 2), (self.y - archer.get_height() - 25)))
+        win.blit(archer,((self.x + self.width / 2) - (archer.get_width() / 2), (self.y - archer.get_height())))
 
     def change_range(self, r):
         self.range = r
@@ -67,7 +65,7 @@ class ArcherTower(Tower):
         enemy_closest.sort(key=lambda x: x.x)
         if len(enemy_closest)>0:
             first_enemy = enemy_closest[0]
-            if self.archer_count == 15:
+            if self.archer_count == 9:
 
                 if first_enemy.hit(self.damage) == True:
                     enemies.remove(first_enemy)
