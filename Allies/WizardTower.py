@@ -24,7 +24,7 @@ class WizardTower(Tower):
         self.range = 150
         self.inRange = False
         self.left= False
-        self.damage = 40
+        self.damage = 15
 
 
     def draw(self, win):

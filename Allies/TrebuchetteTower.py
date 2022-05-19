@@ -12,7 +12,7 @@ for x in range(3):
                                (90, 100)))
 for x in range(9):
     add_str = str(x)
-    trebuchette_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower_NPC/Trebuchette_imgs", "trebuchette_0" + str(x+1) + ".png")), (128, 128)))
+    trebuchette_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower_NPC/Trebuchette_imgs", "trebuchette_0" + str(x) + ".png")), (128, 128)))
 
 
 class TrebuchetteTower(Tower):
@@ -21,10 +21,10 @@ class TrebuchetteTower(Tower):
         self.tower_imgs=tower_imgs
         self.trebuchette_imgs =trebuchette_imgs
         self.trebuchette_count = 0
-        self.range = 150
+        self.range = 250
         self.inRange = False
         self.left= False
-        self.damage = 40
+        self.damage = 20
 
 
     def draw(self, win):

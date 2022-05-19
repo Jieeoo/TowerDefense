@@ -19,7 +19,7 @@ class Game:
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = []
-        self.attack_towers = [TrebuchetteTower(300, 400), ArcherTower(725, 400), WizardTower( 300,150)]
+        self.attack_towers = [TrebuchetteTower(300, 150), ArcherTower(725, 400), WizardTower( 100,250)]
         self.support_towers = [RangeTower(500, 400), DamageTower(300,600)]
         self.lives = 10
         self.money = 100

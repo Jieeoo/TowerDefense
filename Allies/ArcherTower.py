@@ -24,7 +24,7 @@ class ArcherTower(Tower):
         self.range = 200
         self.inRange = False
         self.left= False
-        self.damage = 20
+        self.damage = 10
 
 
     def draw(self, win):
