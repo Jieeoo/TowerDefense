@@ -20,6 +20,8 @@ class WizardTower(Tower):
         super().__init__(x,y)
         self.tower_imgs=tower_imgs
         self.wizard_imgs =wizard_imgs
+        self.width=90
+        self.height=100
         self.wizard_count = 0
         self.range = 150
         self.original_range = self.range
@@ -47,7 +49,7 @@ class WizardTower(Tower):
             add = -25
         else:
             add = wizard.get_width() / 2
-        win.blit(wizard, ((self.x + self.width / 2) - (wizard.get_width() / 2), (self.y - wizard.get_height())))
+        win.blit(wizard, ((self.x ) - (wizard.get_width() / 2), (self.y - wizard.get_height())))
 
     def change_range(self, r):
         self.range = r

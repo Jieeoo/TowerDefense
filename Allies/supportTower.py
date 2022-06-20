@@ -4,8 +4,8 @@ import os
 import math
 import time
 
-range_imgs = [pygame.image.load(os.path.join("game_assets/Tower","range_tower.png")),
-               pygame.image.load(os.path.join("game_assets/Tower","range_tower1.png"))]
+range_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower","range_tower.png")),(85,90)),
+                pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower","range_tower1.png")),(85,90))]
 
 class RangeTower(Tower):
     def __init__(self, x, y):
@@ -13,6 +13,9 @@ class RangeTower(Tower):
         self.range = 150
         self.tower_imgs = range_imgs[:]
         self.effect = [0.2, 0.4]
+        self.width=85
+        self.height=90
+
 
     def draw(self, win):
         super().draw_radius(win)
@@ -37,8 +40,8 @@ class RangeTower(Tower):
 
 
 
-damage_imgs = [pygame.image.load(os.path.join("game_assets/Tower", "damage_tower.png")),
-                pygame.image.load(os.path.join("game_assets/Tower", "damage_tower1.png"))]
+damage_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower", "damage_tower.png")),(85,90)),
+                pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Tower", "damage_tower1.png")),(85,90))]
 
 class DamageTower(RangeTower):
     def __init__(self, x, y):
@@ -46,6 +49,8 @@ class DamageTower(RangeTower):
         self.range = 150
         self.tower_imgs = damage_imgs[:]
         self.effect = [0.2,0.4]
+        self.width=85
+        self.height=90
 
     def support(self, towers):
         effected = []

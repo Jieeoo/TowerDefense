@@ -27,6 +27,8 @@ class TrebuchetteTower(Tower):
         self.left= False
         self.damage = 20
         self.original_damage = self.damage
+        self.width=90
+        self.height=100
 
 
     def draw(self, win):
@@ -47,7 +49,7 @@ class TrebuchetteTower(Tower):
             add = -25
         else:
             add = trebuchette.get_width() / 2
-        win.blit(trebuchette, ((self.x + self.width / 2) - (trebuchette.get_width() / 2), (self.y - trebuchette.get_height())))
+        win.blit(trebuchette, ((self.x ) - (trebuchette.get_width() / 2), (self.y - trebuchette.get_height())))
 
     def change_range(self, r):
         self.range = r
