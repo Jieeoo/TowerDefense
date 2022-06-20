@@ -16,6 +16,7 @@ class Unit:
         self.move_count =0
         self.move_dis = 0
         self.dis=0
+        self.alt=0
         self.imgs=[]
         self.pos=((1187, 100))
         self.flipped_1 = False
@@ -35,7 +36,7 @@ class Unit:
         if self.animation_count >= len(self.imgs):
             self.animation_count = 0
 
-        win.blit(self.img, (self.pos))
+        win.blit(self.img, (self.pos[0],self.pos[1]+self.alt))
         self.draw_health_bar(win)
         self.move()
 
@@ -47,10 +48,10 @@ class Unit:
         """
         length = 50
         move_by = round(length / self.max_health)
-        health_bar = move_by * self.health
+        health_bar =length*(self.health/self.max_health)
 
-        pygame.draw.rect(win, (255,0,0), (self.pos[0]+10, self.pos[1]-15, length, 10), 0)
-        pygame.draw.rect(win, (0, 255, 0), (self.pos[0]+10,self.pos[1]-15, health_bar, 10), 0)
+        pygame.draw.rect(win, (255,0,0), (self.pos[0]+20, self.pos[1]-15+self.alt, length, 10), 0)
+        pygame.draw.rect(win, (0, 255, 0), (self.pos[0]+20,self.pos[1]-15+self.alt, health_bar, 10), 0)
 
 
 

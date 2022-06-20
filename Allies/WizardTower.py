@@ -22,9 +22,11 @@ class WizardTower(Tower):
         self.wizard_imgs =wizard_imgs
         self.wizard_count = 0
         self.range = 150
+        self.original_range = self.range
         self.inRange = False
         self.left= False
         self.damage = 15
+        self.original_damage = self.damage
 
 
     def draw(self, win):

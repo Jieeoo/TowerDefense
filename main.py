@@ -21,7 +21,7 @@ class Game:
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = []
         self.attack_towers = [TrebuchetteTower(300, 150), ArcherTower(725, 400), WizardTower( 100,250)]
-        self.support_towers = [RangeTower(500, 400), DamageTower(300,600)]
+        self.support_towers = [RangeTower(800, 400), DamageTower(800,500)]
         self.lives = 10
         self.money = 100
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
@@ -53,7 +53,6 @@ class Game:
             for d in to_del:
                 self.lives -= 1
                 self.enemys.remove(d)
-
             for tw in self.attack_towers:
                 tw.attack(self.enemys)
 
@@ -68,6 +67,9 @@ class Game:
 
     def draw(self):
         self.win.blit(self.bg, (0,0))
+        # draw enemies
+        for en in self.enemys:
+            en.draw(self.win)
 
         #draw attack towers
         for tw in self.attack_towers:
@@ -77,9 +79,6 @@ class Game:
         for tw in self.support_towers:
             tw.draw(self.win)
 
-        # draw enemies
-        for en in self.enemys:
-            en.draw(self.win)
 
         #draw lifes
         text = self.life_font.render(str(self.lives), 1, (255,255,255))
