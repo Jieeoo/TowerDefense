@@ -1,6 +1,8 @@
 import pygame
+from Menu.menu import Menu
+import os
 
-
+menu_bg= pygame.image.load(os.path.join("game_assets","menu.png"))
 class Tower:
     def __init__(self, x, y):
         self.x = x
@@ -11,7 +13,7 @@ class Tower:
         self.price = [0, 0, 0]
         self.level = 1
         self.selected = False
-        self.menu = None
+        self.menu = Menu(self.x, self.y, menu_bg)
         self.tower_imgs = []
         self.damage = 1
 
