@@ -2,7 +2,7 @@ import pygame
 from Menu.menu import Menu
 import os
 
-menu_bg= pygame.image.load(os.path.join("game_assets","menu.png"))
+menu_bg= pygame.image.load(os.path.join("game_assets/Menu","menu.png"))
 class Tower:
     def __init__(self, x, y):
         self.x = x
