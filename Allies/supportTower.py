@@ -16,6 +16,9 @@ class RangeTower(Tower):
         self.width=85
         self.height=90
 
+    def get_upgrade_cost(self):
+        return self.menu.get_item_cost()
+
 
     def draw(self, win):
         super().draw_radius(win)
@@ -51,6 +54,9 @@ class DamageTower(RangeTower):
         self.effect = [0.2,0.4]
         self.width=85
         self.height=90
+
+    def get_upgrade_cost(self):
+        return self.menu.get_item_cost()
 
     def support(self, towers):
         effected = []
