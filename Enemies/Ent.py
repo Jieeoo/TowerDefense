@@ -12,6 +12,8 @@ for x in range(20):
 class Ent(Unit):
     def __init__(self):
         super() .__init__()
+        self.name = "ent"
+        self.money = 50
         self.max_health = 50
         self.health = self.max_health
         self.imgs = imgs[:]

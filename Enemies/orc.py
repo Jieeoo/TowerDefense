@@ -10,6 +10,8 @@ for x in range(7):
 class Orc(Unit):
     def __init__(self):
         super() .__init__()
+        self.name = "orc"
+        self.money = 20
         self.max_health = 50
         self.health = self.max_health
         self.imgs = imgs[:]

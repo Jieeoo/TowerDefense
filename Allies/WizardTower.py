@@ -3,6 +3,10 @@ from .Tower import Tower
 import os
 import math
 import time
+from Menu.menu import Menu
+
+menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","upgrade.png")), (50,50))
 
 tower_imgs = []
 wizard_imgs = []
@@ -29,7 +33,11 @@ class WizardTower(Tower):
         self.left= False
         self.damage = 15
         self.original_damage = self.damage
+        self.menu = Menu(self, self.x, self.y, menu_bg, [3500, 7000, "MAX"])
+        self.menu.add_btn(upgrade_btn, "Upgrade")
 
+    def get_upgrade_cost(self):
+        return self.menu.get_item_cost()
 
     def draw(self, win):
         super().draw_radius(win)
@@ -55,6 +63,7 @@ class WizardTower(Tower):
         self.range = r
 
     def attack(self, enemies):
+        money = 0
         self.inRange = False
         enemy_closest = []
         for enemy in enemies:
@@ -72,6 +81,7 @@ class WizardTower(Tower):
             if self.wizard_count == 9:
 
                 if first_enemy.hit(self.damage) == True:
+                    money = first_enemy.money
                     enemies.remove(first_enemy)
 
             if first_enemy.pos[0] < self.x and not(self.left):
@@ -82,3 +92,4 @@ class WizardTower(Tower):
                 self.left = False
                 for x, img in enumerate(self.wizard_imgs):
                     self.wizard_imgs[x] = pygame.transform.flip(img, True, False)
+        return money

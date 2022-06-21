@@ -13,21 +13,23 @@ import random
 pygame.font.init()
 
 lives_img = pygame.image.load(os.path.join("game_assets","heart.png"))
-star_imgs = pygame.image.load(os.path.join("game_assets","star.png"))
+coin_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu", "coin.png")),(40,40))
+UI_background = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
+
 class Game:
     def __init__(self):
         self.width = 1200
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = []
-        self.attack_towers = [TrebuchetteTower(300, 150), ArcherTower(725, 400), WizardTower( 100,250)]
+        self.attack_towers = [TrebuchetteTower(300, 150), ArcherTower(725, 400), WizardTower( 100,250), ArcherTower(725, 50)]
         self.support_towers = [RangeTower(800, 400), DamageTower(800,500)]
         self.lives = 10
-        self.money = 100
+        self.money = 2000
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.timer =time.time()
-        self.life_font = pygame.font.SysFont("comicsans",50)
+        self.life_font = pygame.font.SysFont("comicsans",30)
         self.selected_tower = None
 
     def run(self):
@@ -48,18 +50,29 @@ class Game:
 
                 pos = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    for tw in self.attack_towers:
-                        if tw.click(pos[0], pos[1]):
-                            tw.selected = True
-                            self.selected_tower = tw
-                        else:
-                            tw.selected = False
-                    for tw in self.support_towers:
-                        if tw.click(pos[0], pos[1]):
-                            tw.selected = True
-                            self.selected_tower = tw
-                        else:
-                            tw.selected = False
+                    btn_clicked=None
+                    if self.selected_tower:
+                        btn_clicked = self.selected_tower.menu.get_clicked(pos[0], pos[1])
+                        if btn_clicked:
+                            if btn_clicked == "Upgrade":
+                                cost = self.selected_tower.get_upgrade_cost()
+                                if self.money >= cost:
+                                    self.money -= cost
+                                    self.selected_tower.upgrade()
+
+                    if not (btn_clicked):
+                        for tw in self.attack_towers:
+                            if tw.click(pos[0], pos[1]):
+                                tw.selected = True
+                                self.selected_tower = tw
+                            else:
+                                tw.selected = False
+                        for tw in self.support_towers:
+                            if tw.click(pos[0], pos[1]):
+                                tw.selected = True
+                                self.selected_tower = tw
+                            else:
+                                tw.selected = False
             to_del = []
             for en in self.enemys:
                 if en.pos[0] == 110 and en.pos[1] == 90:
@@ -68,7 +81,7 @@ class Game:
                 self.lives -= 1
                 self.enemys.remove(d)
             for tw in self.attack_towers:
-                tw.attack(self.enemys)
+                self.money += tw.attack(self.enemys)
 
             for tw in self.support_towers:
                 tw.support(self.attack_towers)
@@ -93,12 +106,22 @@ class Game:
         for tw in self.support_towers:
             tw.draw(self.win)
 
+        # draw UI background
+        UIbg = UI_background
+        self.win.blit(UIbg, (self.width - 200, 0))
 
         #draw lifes
         text = self.life_font.render(str(self.lives), 1, (255,255,255))
         life = lives_img
-        self.win.blit(text, (self.width-75, 0))
-        self.win.blit(life, (self.width-600, -385))
+        self.win.blit(text, (self.width-100, 10))
+        self.win.blit(life, (self.width-650, -395))
+
+        # draw money
+        text = self.life_font.render(str(self.money), 1, (255, 255, 255))
+        money = coin_img
+        self.win.blit(text, (self.width - 120, 48))
+        self.win.blit(money, (self.width - 175, 48))
+
 
 
         pygame.display.update()

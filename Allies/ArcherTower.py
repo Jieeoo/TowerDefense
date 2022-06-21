@@ -3,6 +3,10 @@ from .Tower import Tower
 import os
 import math
 import time
+from Menu.menu import Menu
+
+menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","upgrade.png")), (50,50))
 
 tower_imgs = []
 archer_imgs = []
@@ -28,6 +32,11 @@ class ArcherTower(Tower):
         self.damage = 10
         self.original_damage = self.damage
         self.width = self.height = 90
+        self.menu = Menu(self, self.x, self.y, menu_bg, [2000, 5000, "MAX"])
+        self.menu.add_btn(upgrade_btn, "Upgrade")
+
+    def get_upgrade_cost(self):
+        return self.menu.get_item_cost()
 
 
     def draw(self, win):
@@ -54,6 +63,7 @@ class ArcherTower(Tower):
         self.range = r
 
     def attack(self, enemies):
+        money = 0
         self.inRange = False
         enemy_closest = []
         for enemy in enemies:
@@ -70,6 +80,7 @@ class ArcherTower(Tower):
             first_enemy = enemy_closest[0]
             if self.archer_count == 9:
                 if first_enemy.hit(self.damage) == True:
+                    money = first_enemy.money
                     enemies.remove(first_enemy)
 
 
@@ -81,5 +92,7 @@ class ArcherTower(Tower):
                 self.left = False
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
+
+        return money
 
 

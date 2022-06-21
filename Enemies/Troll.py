@@ -9,6 +9,8 @@ for x in range(10):
 class Troll(Unit):
     def __init__(self):
         super() .__init__()
+        self.name = "troll"
+        self.money = 100
         self.max_health = 200
         self.health = self.max_health
         self.imgs = imgs[:]

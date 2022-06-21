@@ -1,7 +1,7 @@
 import pygame
 import os
-
-
+pygame.font.init
+coin = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu", "coin.png")),(40,40))
 class Button:
     def __init__(self, x, y, img, name):
         self.name = name
@@ -27,15 +27,17 @@ class Menu:
     """
     menu para selecionar items
     """
-    def __init__(self, x, y, img):
+    def __init__(self, tower, x, y, img, item_cost):
         self.x = x
         self.y = y
         self.width = img.get_width()
         self.height = img.get_height()
-        self.item_name = []
+        self.item_cost = item_cost
         self.buttons = []
         self.items = 0
         self.bg = img
+        self.font = pygame.font.SysFont("comicsans",20)
+        self.tower = tower
 
     def add_btn(self, img, name):
         """
@@ -45,10 +47,19 @@ class Menu:
         :return: None
         """
         self.items += 1
-        inc_x = self.width/self.items
-        btn_x=self.items * inc_x - img.get_width()/2
-        btn_y= self.y + self.height/2 - img.get_height()/2
+        btn_x = self.x - self.bg.get_width() / 2 + 30
+        if self.y > 140:
+            btn_y= self.y - 130
+        else:
+            btn_y = self.y +25
         self.buttons.append(Button(btn_x,btn_y,img,name))
+
+    def get_item_cost(self):
+        """
+        gets cost of upgrade to next level
+        :return: int
+        """
+        return self.item_cost[self.tower.level-1]
 
     def draw(self, win):
         """
@@ -56,10 +67,15 @@ class Menu:
         :param win:surface
         :return: None
         """
-        win.blit(self.bg, (self.x, self.y))
+        if self.y > 140:
+            win.blit(self.bg, (self.x-self.bg.get_width()/2, self.y-150))
+        else:
+            win.blit(self.bg, (self.x - self.bg.get_width() / 2, self.y))
         for item in self.buttons:
             item.draw(win)
-
+            win.blit(coin, (item.x + item.width +25, item.y -10))
+            text = self.font.render(str(self.item_cost[self.tower.level-1]),1,(255,255,255))
+            win.blit(text, (item.x +item.width + 25, item.y + coin.get_height()-10))
     def get_clicked(self, X, Y):
         """
         devuelve el item clicado en el menu
@@ -70,3 +86,5 @@ class Menu:
         for btn in self.buttons:
             if btn.click(X,Y):
                 return btn.name
+
+        return None
