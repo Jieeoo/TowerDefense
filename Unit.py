@@ -38,7 +38,7 @@ class Unit:
 
         win.blit(self.img, (self.pos[0],self.pos[1]+self.alt))
         self.draw_health_bar(win)
-        self.move()
+
 
     def draw_health_bar(self, win):
         """

@@ -86,11 +86,11 @@ class ArcherTower(Tower):
                     enemies.remove(first_enemy)
 
 
-            if first_enemy.pos[0] < self.x and not(self.left) and self.inRange:
+            if first_enemy.pos[0] < self.x and not(self.left):
                 self.left = True
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img,True,False)
-            elif self.left and first_enemy.pos[0] > self.x and self.inRange:
+            elif self.left and first_enemy.pos[0] > self.x:
                 self.left = False
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
