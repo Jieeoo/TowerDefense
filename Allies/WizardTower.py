@@ -35,6 +35,7 @@ class WizardTower(Tower):
         self.original_damage = self.damage
         self.menu = Menu(self, self.x, self.y, menu_bg, [3500, 7000, "MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
+        self.name = "wizard"
 
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()

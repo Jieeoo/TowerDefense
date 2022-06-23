@@ -35,6 +35,7 @@ class TrebuchetteTower(Tower):
         self.height=100
         self.menu = Menu(self, self.x, self.y, menu_bg, [5000, 10000, "MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
+        self.name = "catapulta"
 
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()

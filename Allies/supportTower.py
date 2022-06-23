@@ -15,6 +15,7 @@ class RangeTower(Tower):
         self.effect = [0.2, 0.4]
         self.width=85
         self.height=90
+        self.name = "range"
 
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()
@@ -54,6 +55,7 @@ class DamageTower(RangeTower):
         self.effect = [0.2,0.4]
         self.width=85
         self.height=90
+        self.name = "damage"
 
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()

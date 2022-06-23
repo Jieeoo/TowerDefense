@@ -32,6 +32,8 @@ class ArcherTower(Tower):
         self.damage = 10
         self.original_damage = self.damage
         self.width = self.height = 90
+        self.moving = False
+        self.name = "archer"
         self.menu = Menu(self, self.x, self.y, menu_bg, [2000, 5000, "MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
 
@@ -45,7 +47,7 @@ class ArcherTower(Tower):
         if self.archer_count >= len(self.archer_imgs):
             self.archer_count = 0
 
-        if self.inRange:
+        if self.inRange and not self.moving:
             self.archer_count += 1
             if self.archer_count >= len(self.archer_imgs):
                 self.archer_count = 0
@@ -84,11 +86,11 @@ class ArcherTower(Tower):
                     enemies.remove(first_enemy)
 
 
-            if first_enemy.pos[0] < self.x and not(self.left):
+            if first_enemy.pos[0] < self.x and not(self.left) and self.inRange:
                 self.left = True
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img,True,False)
-            elif self.left and first_enemy.pos[0] > self.x:
+            elif self.left and first_enemy.pos[0] > self.x and self.inRange:
                 self.left = False
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
