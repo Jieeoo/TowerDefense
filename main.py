@@ -133,9 +133,13 @@ class Game:
                             if btn_clicked:
                                 if btn_clicked == "Upgrade":
                                     cost = self.selected_tower.get_upgrade_cost()
-                                    if self.money >= cost:
+                                    if type(cost) == str:
+                                        pass
+                                    elif self.money >= cost:
                                         self.money -= cost
                                         self.selected_tower.upgrade()
+
+
 
                         if not (btn_clicked):
                             for tw in self.attack_towers:
