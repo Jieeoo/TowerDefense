@@ -31,10 +31,7 @@ class Unit:
         """
 
         self.img = self.imgs[self.animation_count]
-        self.animation_count += 1
 
-        if self.animation_count >= len(self.imgs):
-            self.animation_count = 0
 
         win.blit(self.img, (self.pos[0],self.pos[1]+self.alt))
         self.draw_health_bar(win)
@@ -104,6 +101,9 @@ class Unit:
 
         return True
         """
+        self.animation_count += 1
+        if self.animation_count >= len(self.imgs):
+            self.animation_count = 0
         pore = self.path[0]
         dir = pygame.math.Vector2(pore) - self.pos
         if dir.length() <= self.vel:

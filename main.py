@@ -16,7 +16,7 @@ pygame.font.init()
 lives_img = pygame.image.load(os.path.join("game_assets","heart.png"))
 coin_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu", "coin.png")),(40,40))
 UI_background = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
-side_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (100,500))
+side_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","back.png")), (100,550))
 
 archer_icon = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","archer_icon.png")), (75,75))
 wizard_icon = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","wizard_icon.png")), (75,75))

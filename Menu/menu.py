@@ -148,7 +148,7 @@ class VerticalMenu(Menu):
         """
         self.items += 1
         btn_x = self.x -35
-        btn_y = self.y -110 + (self.items-1)*90
+        btn_y = self.y -110 + (self.items-1)*95
         self.buttons.append(VerticalButton(btn_x, btn_y, img, name, cost))
     def get_item_cost(self,name):
         for btn in self.buttons:
@@ -162,12 +162,11 @@ class VerticalMenu(Menu):
         :param win:surface
         :return: None
         """
-        if self.y > 140:
-            win.blit(self.bg, (self.x-self.bg.get_width()/2, self.y-150))
-        else:
-            win.blit(self.bg, (self.x - self.bg.get_width() / 2, self.y))
+
+        win.blit(self.bg, (self.x - self.bg.get_width() / 2, self.y - 145))
         for item in self.buttons:
+
             item.draw(win)
-            win.blit(coin2, (item.x, item.y + item.height -5))
+            win.blit(coin2, (item.x, item.y + item.height ))
             text = self.font.render(str(item.cost),1,(255,255,255))
-            win.blit(text, (item.x +25, item.y +item.height-10))
+            win.blit(text, (item.x +25, item.y +item.height-5))
