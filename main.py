@@ -27,7 +27,7 @@ damage_icon = pygame.transform.scale(pygame.image.load(os.path.join("game_assets
 play_btn=pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","play.png")), (75,75))
 pause_btn=pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","pausa.png")), (75,75))
 
-attack_tower_name=["archer","wizard","catapulta"]
+attack_tower_name=["archer","wizard","trebuchette"]
 support_tower_name=["range","damage"]
 
 waves = [
@@ -47,8 +47,8 @@ class Game:
         self.height = 700
         self.win = pygame.display.set_mode((self.width, self.height))
         self.enemys = []
-        self.attack_towers = [TrebuchetteTower(300, 150), ArcherTower(725, 400), WizardTower( 100,250), ArcherTower(725, 50)]
-        self.support_towers = [RangeTower(800, 400), DamageTower(800,500)]
+        self.attack_towers = []
+        self.support_towers = []
         self.lives = 10
         self.money = 20000
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
@@ -59,7 +59,7 @@ class Game:
         self.Menu = VerticalMenu(self.width - side_img.get_width()+55 , 300, side_img)
         self.Menu.add_btn(archer_icon,"buy_archer",500)
         self.Menu.add_btn(wizard_icon, "buy_wizard", 750)
-        self.Menu.add_btn(catapulta_icon, "buy_catapulta", 100)
+        self.Menu.add_btn(catapulta_icon, "buy_trebuchette", 100)
         self.Menu.add_btn(range_icon, "buy_range",750)
         self.Menu.add_btn(damage_icon, "buy_damage", 750)
         self.moving_object = None
@@ -91,7 +91,6 @@ class Game:
             if self.pause == False:
                 if time.time() -self.timer> 2:
                     self.timer = time.time()
-                    #añadir en la lista el resto de enemigos cuando esten hechos
                     self.gen_enemies()
 
             pos = pygame.mouse.get_pos()
@@ -170,7 +169,7 @@ class Game:
 
             if self.lives <= 0:
                 print("You lose")
-                run=False
+                run = False
 
             self.draw()
         pygame.quit()
@@ -220,7 +219,7 @@ class Game:
 
     def add_tower(self, name):
         x,y= pygame.mouse.get_pos()
-        name_list=["buy_archer","buy_wizard", "buy_catapulta", "buy_range", "buy_damage"]
+        name_list=["buy_archer","buy_wizard", "buy_trebuchette", "buy_range", "buy_damage"]
         object_list=[ArcherTower(x,y),WizardTower(x,y),TrebuchetteTower(x,y),RangeTower(x,y),DamageTower(x,y)]
 
         try:
