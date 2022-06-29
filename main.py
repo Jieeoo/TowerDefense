@@ -39,8 +39,7 @@ wave_bg=pygame.transform.scale(pygame.image.load(os.path.join("game_assets","wav
 attack_tower_name=["archer","wizard","trebuchette"]
 support_tower_name=["range","damage"]
 
-#music
-pygame.mixer.music.load(os.path.join("game_assets","music.mp3"))
+
 
 waves = [
     [20, 0, 0],
@@ -88,7 +87,7 @@ class Game:
                 self.wave += 1
                 self.current_wave = waves[self.wave]
                 self.pause = True
-                self.playPauseButton.paused = self.pause
+                self.PlayPauseButton.paused = self.pause
         else:
             wave_enemies = [Orc(), Ent(), Troll()]
             for x in range(len(self.current_wave)):
@@ -98,7 +97,8 @@ class Game:
                     break
 
     def run(self):
-        pygame.mixer.music.play(1)
+        pygame.mixer.music.load(os.path.join("game_assets", "music.mp3"))
+        pygame.mixer.music.play(-1)
         run = True
         clock = pygame.time.Clock()
 
@@ -312,9 +312,3 @@ class Game:
         except Exception as e:
             print(str(e)+ "NOT VALID NAME")
 
-
-
-
-win = pygame.display.set_mode((1200, 700))
-g = Game(win)
-g.run()
