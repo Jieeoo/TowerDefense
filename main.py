@@ -1,5 +1,6 @@
 import pygame.display
 import os
+import math
 from Enemies.orc import Orc
 from Enemies.Ent import Ent
 from Enemies.Troll import Troll
@@ -12,6 +13,9 @@ import Unit
 import time
 import random
 pygame.font.init()
+pygame.init()
+
+path = [(1187, 100), (350, 100), (350, 300), (850, 300), (850, 480), (110, 480), (110, 90)]
 
 lives_img = pygame.image.load(os.path.join("game_assets","heart.png"))
 coin_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu", "coin.png")),(40,40))
@@ -27,8 +31,16 @@ damage_icon = pygame.transform.scale(pygame.image.load(os.path.join("game_assets
 play_btn=pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","play.png")), (75,75))
 pause_btn=pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","pausa.png")), (75,75))
 
+sound_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets","sound.png")), (75,75))
+sound_off_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets","sound_off.png")), (75,75))
+
+wave_bg=pygame.transform.scale(pygame.image.load(os.path.join("game_assets","wave.png")), (100,100))
+
 attack_tower_name=["archer","wizard","trebuchette"]
 support_tower_name=["range","damage"]
+
+#music
+pygame.mixer.music.load(os.path.join("game_assets","music.mp3"))
 
 waves = [
     [20, 0, 0],
@@ -42,10 +54,10 @@ waves = [
 
 
 class Game:
-    def __init__(self):
+    def __init__(self,win):
         self.width = 1200
         self.height = 700
-        self.win = pygame.display.set_mode((self.width, self.height))
+        self.win = win
         self.enemys = []
         self.attack_towers = []
         self.support_towers = []
@@ -66,13 +78,17 @@ class Game:
         self.wave = 0
         self.current_wave = waves[self.wave][:]
         self.pause = True
+        self.music_on = True
         self.PlayPauseButton= PlayPauseButton(play_btn,pause_btn,10,self.height-85)
+        self.SoundButton = PlayPauseButton(sound_btn, sound_off_btn, 90, self.height - 85)
 
     def gen_enemies(self):
         if sum(self.current_wave) == 0:
-            self.wave += 1
-            self.current_wave = waves[self.wave]
-            self.pause = True
+            if len(self.enemys) == 0:
+                self.wave += 1
+                self.current_wave = waves[self.wave]
+                self.pause = True
+                self.playPauseButton.paused = self.pause
         else:
             wave_enemies = [Orc(), Ent(), Troll()]
             for x in range(len(self.current_wave)):
@@ -82,6 +98,7 @@ class Game:
                     break
 
     def run(self):
+        pygame.mixer.music.play(1)
         run = True
         clock = pygame.time.Clock()
 
@@ -97,26 +114,51 @@ class Game:
 
             if self.moving_object:
                 self.moving_object.move(pos[0],pos[1])
+                tower_list = self.attack_towers[:] + self.support_towers[:]
+                collide = False
+                for tower in tower_list:
+                    if tower.collide(self.moving_object):
+                        collide = True
+                        tower.place_color = (255, 0, 0, 100)
+                        self.moving_object.place_color = ((255, 0, 0, 100))
+                    else:
+                        tower.place_color = (0, 255, 0, 100)
+                        if not collide:
+                            self.moving_object.place_color = ((0, 255, 0, 100))
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
                 pos = pygame.mouse.get_pos()
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONUP:
                     if self.moving_object:
+                        not_allowed = False
+                        tower_list = self.attack_towers[:] + self.support_towers[:]
+                        for tower in tower_list:
+                            if tower.collide(self.moving_object):
+                                not_allowed = True
 
-                        if self.moving_object.name in attack_tower_name:
-                            self.attack_towers.append(self.moving_object)
-                        elif self.moving_object.name in support_tower_name:
-                            self.support_towers.append(self.moving_object)
-                        self.moving_object.moving = False
-                        self.moving_object = None
+                        if not not_allowed and self.point_to_line(self.moving_object):
+                            if self.moving_object.name in attack_tower_name:
+                                    self.attack_towers.append(self.moving_object)
+                            elif self.moving_object.name in support_tower_name:
+                                self.support_towers.append(self.moving_object)
+                            self.moving_object.moving = False
+                            self.moving_object = None
 
                     else:
                         if self.PlayPauseButton.click(pos[0],pos[1]):
                             self.pause = not(self.pause)
                             self.PlayPauseButton.paused = self.pause
+                        if self.SoundButton.click(pos[0], pos[1]):
+                            self.music_on = not (self.music_on)
+                            self.SoundButton.paused = self.music_on
+                            if self.music_on:
+                                pygame.mixer.music.unpause()
+                            else:
+                                pygame.mixer.music.pause()
 
                         side_menu_button = self.Menu.get_clicked(pos[0],pos[1])
                         if side_menu_button:
@@ -153,29 +195,54 @@ class Game:
                                     self.selected_tower = tw
                                 else:
                                     tw.selected = False
-            to_del = []
-            for en in self.enemys:
-                en.move()
-                if en.pos[0] == 110 and en.pos[1] == 90:
-                    to_del.append(en)
-            for d in to_del:
-                self.lives -= 1
-                self.enemys.remove(d)
-            for tw in self.attack_towers:
-                self.money += tw.attack(self.enemys)
+            if not self.pause:
+                to_del = []
+                for en in self.enemys:
+                    en.move()
+                    if en.pos[0] == 110 and en.pos[1] == 90:
+                        to_del.append(en)
+                for d in to_del:
+                    self.lives -= 1
+                    self.enemys.remove(d)
+                for tw in self.attack_towers:
+                    self.money += tw.attack(self.enemys)
 
-            for tw in self.support_towers:
-                tw.support(self.attack_towers)
+                for tw in self.support_towers:
+                    tw.support(self.attack_towers)
 
-            if self.lives <= 0:
-                print("You lose")
-                run = False
+                if self.lives <= 0:
+                    print("You lose")
+                    run = False
 
             self.draw()
         pygame.quit()
 
+    def point_to_line(self,tower):
+        """
+        returns if you can place a tower based on the distance to the path
+        :param tower:
+        :return: Bool
+        """
+        #find two closest points
+        closest=[]
+        for point in path:
+            dis = math.sqrt((tower.x-point[0])**2+(tower.y - point[1])**2)
+            closest.append([dis,point])
+
+        closest.sort(key=lambda x: x[0])
+
+        return True
+
     def draw(self):
         self.win.blit(self.bg, (0,0))
+
+        #draw placement
+        if self.moving_object:
+            for tower in self.attack_towers:
+                tower.draw_placement(self.win)
+            for tower in self.support_towers:
+                tower.draw_placement(self.win)
+            self.moving_object.draw_placement(self.win)
         # draw enemies
         for en in self.enemys:
             en.draw(self.win)
@@ -190,14 +257,24 @@ class Game:
             tw.draw(self.win)
         self.Menu.draw(self.win)
 
+        # redraw selected tower
+        if self.selected_tower:
+            self.selected_tower.draw(self.win)
+
         if self.moving_object:
             self.moving_object.draw(self.win)
+
+
 
         # draw UI background
         UIbg = UI_background
         self.win.blit(UIbg, (self.width - 200, 0))
 
+        # draw Play/Pause Button
         self.PlayPauseButton.draw(self.win)
+
+        # draw Play/Pause music Button
+        self.SoundButton.draw(self.win)
 
         #draw lifes
         text = self.life_font.render(str(self.lives), 1, (255,255,255))
@@ -210,6 +287,11 @@ class Game:
         money = coin_img
         self.win.blit(text, (self.width - 120, 48))
         self.win.blit(money, (self.width - 175, 48))
+
+        #draw current wave
+        self.win.blit(wave_bg,(10,10))
+        text = self.life_font.render(str(self.wave),1,(255,255,255))
+        self.win.blit(text, (10 +wave_bg.get_width()/2 -text.get_width()/2,40))
 
 
 
@@ -230,5 +312,9 @@ class Game:
         except Exception as e:
             print(str(e)+ "NOT VALID NAME")
 
-g = Game()
+
+
+
+win = pygame.display.set_mode((1200, 700))
+g = Game(win)
 g.run()

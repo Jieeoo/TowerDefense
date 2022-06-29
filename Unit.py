@@ -1,9 +1,11 @@
 import pygame
 import math
 
+
+
 class Unit:
     def __init__(self):
-        self.widht = 32
+        self.width = 32
         self.height = 32
         self.animation_count = 0
         self.health = 1
@@ -29,9 +31,7 @@ class Unit:
         :param win: surface
         :return: None
         """
-
         self.img = self.imgs[self.animation_count]
-
 
         win.blit(self.img, (self.pos[0],self.pos[1]+self.alt))
         self.draw_health_bar(win)
