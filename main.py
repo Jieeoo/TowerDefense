@@ -4,6 +4,7 @@ import math
 from Enemies.orc import Orc
 from Enemies.Ent import Ent
 from Enemies.Troll import Troll
+from Enemies.Dragon import Dragon
 from Allies.ArcherTower import ArcherTower
 from Allies.supportTower import DamageTower, RangeTower
 from Allies.WizardTower import WizardTower
@@ -42,12 +43,12 @@ support_tower_name=["range","damage"]
 
 
 waves = [
-    [20, 0, 0],
-    [50, 0, 0],
-    [100,0,0],
-    [50,20,0],
-    [20,50, 0],
-    [50, 0,20],
+    [20, 0, 0,0],
+    [50, 0, 0, 0],
+    [100,0,0, 0],
+    [50,20,0, 0],
+    [20,50, 0, 1],
+    [50, 0,20, 2],
 
 ]
 
@@ -89,7 +90,7 @@ class Game:
                 self.pause = True
                 self.PlayPauseButton.paused = self.pause
         else:
-            wave_enemies = [Orc(), Ent(), Troll()]
+            wave_enemies = [Orc(), Ent(), Troll(), Dragon()]
             for x in range(len(self.current_wave)):
                 if self.current_wave[x] !=0:
                     self.enemys.append(wave_enemies[x])
@@ -98,15 +99,15 @@ class Game:
 
     def run(self):
         pygame.mixer.music.load(os.path.join("game_assets", "music.mp3"))
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.play(loops = -1)
         run = True
         clock = pygame.time.Clock()
 
         while run:
             pygame.time.delay(100)
-            clock.tick(30)
+            clock.tick(500)
             if self.pause == False:
-                if time.time() -self.timer> 2:
+                if time.time() - self.timer > random.randrange(1,6)/1.5:
                     self.timer = time.time()
                     self.gen_enemies()
 
@@ -202,7 +203,10 @@ class Game:
                     if en.pos[0] == 110 and en.pos[1] == 90:
                         to_del.append(en)
                 for d in to_del:
-                    self.lives -= 1
+                    if d.name == "Dragon":
+                        self.lives -= 10
+                    else:
+                        self.lives -= 1
                     self.enemys.remove(d)
                 for tw in self.attack_towers:
                     self.money += tw.attack(self.enemys)
@@ -215,7 +219,7 @@ class Game:
                     run = False
 
             self.draw()
-        pygame.quit()
+
 
     def point_to_line(self,tower):
         """

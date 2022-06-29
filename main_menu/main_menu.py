@@ -4,11 +4,11 @@ import os
 pygame.init()
 
 
-start_btn = pygame.image.load(os.path.join("game_assets","start.png"))
-Title = pygame.image.load(os.path.join("game_assets","Title.png"))
-Title2 = pygame.image.load(os.path.join("game_assets","Title2.png"))
+start_btn = pygame.image.load(os.path.join("game_assets/main_menu","start.png"))
+Title = pygame.image.load(os.path.join("game_assets/main_menu","Title.png"))
+Title2 = pygame.image.load(os.path.join("game_assets/main_menu","Title2.png"))
 #music
-pygame.mixer.music.load(os.path.join("game_assets","Title_music.mp3"))
+pygame.mixer.music.load(os.path.join("game_assets/main_menu","Title_music.mp3"))
 class MainMenu:
     def __init__(self):
         self.width = 1200
@@ -19,7 +19,7 @@ class MainMenu:
         self.btn = (self.width/2 - start_btn.get_width()/2, self.height/2 - start_btn.get_height()/2, start_btn.get_width(), start_btn.get_height())
 
     def run(self):
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.play(loops = -1)
         run = True
 
         while run:

@@ -43,9 +43,9 @@ class Tower:
 
         #draw range radious
         surface = pygame.Surface((self.range * 4, self.range * 4), pygame.SRCALPHA, 32)
-        pygame.draw.circle(surface, self.place_color, (75, 75), 75, 0)
+        pygame.draw.circle(surface, self.place_color, (50, 50), 50, 0)
 
-        win.blit(surface, (self.x-75, self.y-75))
+        win.blit(surface, (self.x-50, self.y-50))
 
 
     def click(self, X, Y):
@@ -88,7 +88,7 @@ class Tower:
         y2 = otherTower.y
 
         dis = math.sqrt((x2 - self.x)**2 + (y2 -self.y)**2)
-        if dis >= 150:
+        if dis >= 100:
             return False
         else:
             return True

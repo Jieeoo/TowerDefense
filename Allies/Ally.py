@@ -1,4 +1,0 @@
-import Unit
-
-class Ally
-
