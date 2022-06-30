@@ -1,3 +1,4 @@
+import Settings
 from main import Game
 import pygame
 import os
@@ -7,12 +8,16 @@ pygame.init()
 start_btn = pygame.image.load(os.path.join("game_assets/main_menu","start.png"))
 Title = pygame.image.load(os.path.join("game_assets/main_menu","Title.png"))
 Title2 = pygame.image.load(os.path.join("game_assets/main_menu","Title2.png"))
+
+
+
 #music
 pygame.mixer.music.load(os.path.join("game_assets/main_menu","Title_music.mp3"))
+
 class MainMenu:
     def __init__(self):
-        self.width = 1200
-        self.height = 700
+        self.width = Settings.width
+        self.height = Settings.height
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.win = pygame.display.set_mode((self.width, self.height))
@@ -35,8 +40,8 @@ class MainMenu:
                             game = Game(self.win)
                             game.run()
                             del game
-                            pygame.mixer.music.stop()
-                            pygame.mixer.music.unload()
+
+
 
             self.draw()
 
@@ -47,4 +52,5 @@ class MainMenu:
         self.win.blit(start_btn,(self.btn[0],self.btn[1]))
         self.win.blit(Title, (self.width/2-Title.get_width()/2, self.height/2-Title.get_height()/2-250))
         self.win.blit(Title2, (self.width / 2 - Title2.get_width() / 2, self.height / 2 - Title2.get_height() / 2 - 150))
+        #pygame.draw.circle(self.win,(255,0,0),(140,150), 10)
         pygame.display.update()

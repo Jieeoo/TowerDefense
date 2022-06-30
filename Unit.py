@@ -1,7 +1,10 @@
 import pygame
 import math
 
+import Settings
 
+W = Settings.width
+H = Settings.height
 
 class Unit:
     def __init__(self):
@@ -10,7 +13,7 @@ class Unit:
         self.animation_count = 0
         self.health = 1
         self.vel = 10
-        self.path = [(1187, 100), (350, 100), (350, 300), (850, 300), (850, 480), (110, 480), (110, 90)]
+        self.path = [(W, H/7), (W/3.3, H/7), (W/3.3, H/2.5), (W/1.4, H/2.5), (W/1.4, H/1.45), (W/13, H/1.45), (W/13, H/5)]
         self.x = self.path[0][0]
         self.y = self.path[0][1]
         self.img = None
@@ -116,11 +119,11 @@ class Unit:
             pos = (new_pos.x, new_pos.y)
         self.pos=pos
 
-        if pos[0] == 350 and pos[1] >=100 and not(self.flipped_1):
+        if pos[0] == W/3.3 and pos[1] >= H/7 and not(self.flipped_1):
             self.flipped_1 = True
             for x, img in enumerate(self.imgs):
                 self.imgs[x] = pygame.transform.flip(img, True, False)
-        elif pos[0] == 850 and pos[1] >=300 and not (self.flipped_2):
+        elif pos[0] == W/1.4 and pos[1] >= H/2.5 and not (self.flipped_2):
             self.flipped_2 = True
             for x, img in enumerate(self.imgs):
                 self.imgs[x] = pygame.transform.flip(img, True, False)

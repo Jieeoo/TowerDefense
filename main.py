@@ -1,6 +1,8 @@
 import pygame.display
 import os
 import math
+
+import Settings
 from Enemies.orc import Orc
 from Enemies.Ent import Ent
 from Enemies.Troll import Troll
@@ -16,7 +18,7 @@ import random
 pygame.font.init()
 pygame.init()
 
-path = [(1187, 100), (350, 100), (350, 300), (850, 300), (850, 480), (110, 480), (110, 90)]
+
 
 lives_img = pygame.image.load(os.path.join("game_assets","heart.png"))
 coin_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu", "coin.png")),(40,40))
@@ -43,7 +45,7 @@ support_tower_name=["range","damage"]
 
 
 waves = [
-    [20, 0, 0,0],
+    [1, 1, 1,1],
     [50, 0, 0, 0],
     [100,0,0, 0],
     [50,20,0, 0],
@@ -55,8 +57,8 @@ waves = [
 
 class Game:
     def __init__(self,win):
-        self.width = 1200
-        self.height = 700
+        self.width = Settings.width
+        self.height = Settings.height
         self.win = win
         self.enemys = []
         self.attack_towers = []
@@ -81,6 +83,8 @@ class Game:
         self.music_on = True
         self.PlayPauseButton= PlayPauseButton(play_btn,pause_btn,10,self.height-85)
         self.SoundButton = PlayPauseButton(sound_btn, sound_off_btn, 90, self.height - 85)
+
+
 
     def gen_enemies(self):
         if sum(self.current_wave) == 0:
@@ -200,11 +204,11 @@ class Game:
                 to_del = []
                 for en in self.enemys:
                     en.move()
-                    if en.pos[0] == 110 and en.pos[1] == 90:
+                    if en.pos[0] == self.width/13 and en.pos[1] == self.height/5:
                         to_del.append(en)
                 for d in to_del:
                     if d.name == "Dragon":
-                        self.lives -= 10
+                        self.lives = 0
                     else:
                         self.lives -= 1
                     self.enemys.remove(d)
