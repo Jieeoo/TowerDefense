@@ -23,7 +23,7 @@ class Unit:
         self.dis=0
         self.alt=0
         self.imgs=[]
-        self.pos=((1187, 100))
+        self.pos = self.path[0]
         self.flipped_1 = False
         self.flipped_2 = False
         self.max_health = 0
