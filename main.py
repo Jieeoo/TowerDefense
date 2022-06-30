@@ -1,6 +1,7 @@
 import pygame.display
 import os
 import math
+from Allies.Tower import Tower
 
 import Settings
 from Enemies.orc import Orc
@@ -296,19 +297,19 @@ class Game:
 
         #draw attack towers
         for tw in self.attack_towers:
-            tw.draw(self.win)
+            tw.draw(self.win,self.pause)
 
         # draw support towers
         for tw in self.support_towers:
-            tw.draw(self.win)
+            tw.draw(self.win,self.pause)
         self.Menu.draw(self.win)
 
         # redraw selected tower
         if self.selected_tower:
-            self.selected_tower.draw(self.win)
+            self.selected_tower.draw(self.win,self.pause)
 
         if self.moving_object:
-            self.moving_object.draw(self.win)
+            self.moving_object.draw(self.win,self.pause)
 
 
 

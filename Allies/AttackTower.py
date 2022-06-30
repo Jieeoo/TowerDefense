@@ -30,19 +30,19 @@ class AttackTower(Tower):
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()
 
-    def draw(self, win):
+    def draw(self, win,pause):
         super().draw_radius(win)
         super().draw(win)
         if self.animation_count >= len(self.trop_imgs):
             self.animation_count = 0
 
-        if self.inRange and not self.moving:
+        if self.inRange and not self.moving and not pause:
             self.animation_count += 1
             if self.animation_count >= len(self.trop_imgs):
                 self.animation_count = 0
         else:
             self.animation_count = 0
-
+        print(self.animation_count)
         character = self.trop_imgs[self.animation_count]
         if self.left == True:
             add = -25

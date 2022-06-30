@@ -21,7 +21,7 @@ class RangeTower(Tower):
         return self.menu.get_item_cost()
 
 
-    def draw(self, win):
+    def draw(self, win,pause):
         super().draw_radius(win)
         super().draw(win)
 
