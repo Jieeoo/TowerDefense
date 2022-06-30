@@ -134,6 +134,9 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
+                    pygame.mixer.music.play(loops=-1)
                     run = False
 
                 pos = pygame.mouse.get_pos()
