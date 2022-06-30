@@ -13,10 +13,10 @@ from Allies.WizardTower import WizardTower
 from Allies.TrebuchetteTower import TrebuchetteTower
 from Menu.menu import VerticalMenu, PlayPauseButton
 from Obstaculo import obstaculo
+from lost_game.lost_game import LostGame
 import Unit
 import time
 import random
-
 pygame.font.init()
 pygame.init()
 
@@ -154,6 +154,9 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
+                    pygame.mixer.music.play(loops=-1)
                     run = False
 
                 pos = pygame.mouse.get_pos()
@@ -168,7 +171,7 @@ class Game:
                             if obstaculo.collide(self.moving_object,obs):
                                 not_allowed = True
 
-                        if not not_allowed and self.point_to_line(self.moving_object):
+                        if not not_allowed:
                             if self.moving_object.name in attack_tower_name:
                                     self.attack_towers.append(self.moving_object)
                             elif self.moving_object.name in support_tower_name:
@@ -243,26 +246,19 @@ class Game:
 
                 if self.lives <= 0:
                     print("You lose")
+                    LG = LostGame()
+                    LG.run()
                     run = False
 
             self.draw()
 
 
-    def point_to_line(self,tower):
-        """
-        returns if you can place a tower based on the distance to the path
-        :param tower:
-        :return: Bool
-        """
-        #find two closest points
-        closest=[]
-        for point in Unit.Unit().path:
-            dis = math.sqrt((tower.x-point[0])**2+(tower.y - point[1])**2)
-            closest.append([dis,point])
 
-        closest.sort(key=lambda x: x[0])
 
-        return True
+
+
+
+
 
     def draw(self):
         self.win.blit(self.bg, (0,0))

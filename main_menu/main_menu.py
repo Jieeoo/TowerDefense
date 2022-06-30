@@ -10,10 +10,6 @@ Title = pygame.image.load(os.path.join("game_assets/main_menu","Title.png"))
 Title2 = pygame.image.load(os.path.join("game_assets/main_menu","Title2.png"))
 
 
-
-#music
-pygame.mixer.music.load(os.path.join("game_assets/main_menu","Title_music.mp3"))
-
 class MainMenu:
     def __init__(self):
         self.width = Settings.width
@@ -24,6 +20,7 @@ class MainMenu:
         self.btn = (self.width/2 - start_btn.get_width()/2, self.height/2 - start_btn.get_height()/2, start_btn.get_width(), start_btn.get_height())
 
     def run(self):
+        pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
         pygame.mixer.music.play(loops = -1)
         run = True
 
