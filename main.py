@@ -148,7 +148,7 @@ class Game:
                             if tower.collide(self.moving_object):
                                 not_allowed = True
 
-                        if not not_allowed and self.point_to_line(self.moving_object):
+                        if not not_allowed:
                             if self.moving_object.name in attack_tower_name:
                                     self.attack_towers.append(self.moving_object)
                             elif self.moving_object.name in support_tower_name:
@@ -228,21 +228,12 @@ class Game:
             self.draw()
 
 
-    def point_to_line(self,tower):
-        """
-        returns if you can place a tower based on the distance to the path
-        :param tower:
-        :return: Bool
-        """
-        #find two closest points
-        closest=[]
-        for point in path:
-            dis = math.sqrt((tower.x-point[0])**2+(tower.y - point[1])**2)
-            closest.append([dis,point])
 
-        closest.sort(key=lambda x: x[0])
 
-        return True
+
+
+
+
 
     def draw(self):
         self.win.blit(self.bg, (0,0))

@@ -52,3 +52,64 @@ while run:
     clock.tick(100)
 
 pygame.quit()
+
+
+def point_to_line(self, tower):
+    """
+    returns if you can place a tower based on the distance to the path
+    :param tower:
+    :return: Bool
+    """
+    # find two closest points
+    closest = []
+    for point in path:
+        dis = math.sqrt((tower.x - point[0]) ** 2 + (tower.y - point[1]) ** 2)
+        closest.append([dis, point])
+
+    closest.sort(key=lambda x: x[0])
+
+    return True
+
+    if self.moving_object.path_dis(self.point_to_line(self.moving_object)):
+        not_allowed = True
+
+
+    def point_to_line(self,tower):
+        """
+        returns if you can place a tower based on the distance to the path
+        :param tower:
+        :return: Bool
+        """
+        W = self.width
+        H = self.height
+        path = [(W, H / 7), (W / 3.3, H / 7), (W / 3.3, H / 2.5), (W / 1.4, H / 2.5), (W / 1.4, H / 1.45),
+                (W / 13, H / 1.45), (W / 13, H / 5)]
+        #find two closest points
+        closest=[]
+        for point in path:
+            dis = math.sqrt((tower.x-point[0])**2+(tower.y - point[1])**2)
+            closest.append([dis,point])
+
+        closest.sort(key=lambda x: x[0])
+        p1 = closest[0][1]
+        p2 = closest[0][1]
+        try:
+            m = (p1[1]-p2[1])/(p1[0]-p2[0])
+            n = p1[1] - m * p1[0]
+            mp = -1 / m
+            np = tower.y - tower.x * mp
+            xc = (n - np) / (mp - m)
+            yc = m * xc + n
+            dis = math.sqrt((tower.x - xc) ** 2 + (tower.y - yc) ** 2)
+
+            return dis
+        except ZeroDivisionError:
+            dis = tower.y - p1[1]
+
+            return dis
+
+    def path_dis(self, dis):
+        if dis >= 10:
+            return False
+        else:
+            return True
