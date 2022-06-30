@@ -12,6 +12,7 @@ from Allies.supportTower import DamageTower, RangeTower
 from Allies.WizardTower import WizardTower
 from Allies.TrebuchetteTower import TrebuchetteTower
 from Menu.menu import VerticalMenu, PlayPauseButton
+from lost_game.lost_game import LostGame
 import Unit
 import time
 import random
@@ -223,6 +224,8 @@ class Game:
 
                 if self.lives <= 0:
                     print("You lose")
+                    LG = LostGame()
+                    LG.run()
                     run = False
 
             self.draw()
