@@ -12,9 +12,11 @@ from Allies.supportTower import DamageTower, RangeTower
 from Allies.WizardTower import WizardTower
 from Allies.TrebuchetteTower import TrebuchetteTower
 from Menu.menu import VerticalMenu, PlayPauseButton
+from Obstaculo import obstaculo
 import Unit
 import time
 import random
+
 pygame.font.init()
 pygame.init()
 
@@ -53,7 +55,11 @@ waves = [
     [50, 0,20, 2],
 
 ]
-
+obstacle=[]
+for x in obstaculo.rectangulo_camino(obstaculo):
+    obstacle.append(x)
+for x in obstaculo.rectangulo_bg(obstaculo):
+    obstacle.append(x)
 
 class Game:
     def __init__(self,win):
@@ -63,6 +69,7 @@ class Game:
         self.enemys = []
         self.attack_towers = []
         self.support_towers = []
+        self.obstacle=obstacle
         self.lives = 10
         self.money = 20000
         self.bg = pygame.image.load(os.path.join("game_assets", "bg2.0.png"))
@@ -132,6 +139,19 @@ class Game:
                             self.moving_object.place_color = ((0, 255, 0, 100))
 
 
+            if self.moving_object:
+                self.moving_object.move(pos[0],pos[1])
+                obs = self.obstacle
+                collide = False
+                for thing in obs:
+                    if obstaculo.collide(self.moving_object,thing):
+                        collide = True
+                        self.moving_object.place_color = ((255, 0, 0, 100))
+                    else:
+                        if not collide:
+                            self.moving_object.place_color = ((0, 255, 0, 100))
+
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
@@ -143,6 +163,9 @@ class Game:
                         tower_list = self.attack_towers[:] + self.support_towers[:]
                         for tower in tower_list:
                             if tower.collide(self.moving_object):
+                                not_allowed = True
+                        for obs in obstacle:
+                            if obstaculo.collide(self.moving_object,obs):
                                 not_allowed = True
 
                         if not not_allowed and self.point_to_line(self.moving_object):
@@ -233,7 +256,7 @@ class Game:
         """
         #find two closest points
         closest=[]
-        for point in path:
+        for point in Unit.Unit().path:
             dis = math.sqrt((tower.x-point[0])**2+(tower.y - point[1])**2)
             closest.append([dis,point])
 
@@ -250,7 +273,12 @@ class Game:
                 tower.draw_placement(self.win)
             for tower in self.support_towers:
                 tower.draw_placement(self.win)
+            for obs in self.obstacle:
+                obstaculo.draw(obstaculo, self.win, obs)
+
             self.moving_object.draw_placement(self.win)
+
+
         # draw enemies
         for en in self.enemys:
             en.draw(self.win)

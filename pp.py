@@ -20,6 +20,7 @@ window = pygame.display.set_mode((400, 400))
 clock = pygame.time.Clock()
 
 corner_points = [(100, 100), (300, 300), (300, 100), (100, 300)]
+poss = corner_points[:]
 pos = corner_points[0]
 speed = 10
 
@@ -45,8 +46,9 @@ while run:
 
     pos = move(pos, speed, corner_points)
 
+
     window.fill(0)
-    pygame.draw.lines(window, "gray", True, corner_points)
+    pygame.draw.rect(window, "gray", pygame.Rect(poss[0][0],poss[0][1],abs(poss[0][0]-poss[2][0]),abs(poss[0][1]-poss[2][1])))
     pygame.draw.circle(window, "red", pos, 20)
     pygame.display.update()
     clock.tick(100)
