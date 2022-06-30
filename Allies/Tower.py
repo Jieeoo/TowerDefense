@@ -43,7 +43,7 @@ class Tower:
 
         #draw range radious
         surface = pygame.Surface((self.range * 4, self.range * 4), pygame.SRCALPHA, 32)
-        pygame.draw.circle(surface, self.place_color, (50, 50), 50, 0)
+        pygame.draw.circle(surface, self.place_color, (64, 64), 64, 0)
 
         win.blit(surface, (self.x-50, self.y-50))
 
