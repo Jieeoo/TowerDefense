@@ -2,7 +2,6 @@ import pygame
 from .Tower import Tower
 import os
 import math
-import time
 from Menu.menu import Menu
 
 menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
@@ -30,11 +29,8 @@ class AttackTower(Tower):
         self.menu.add_btn(delete_btn,"delete")
         self.name = ""
 
-
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()
-
-
 
     def draw(self, win,pause):
         super().draw_radius(win)

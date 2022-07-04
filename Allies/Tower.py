@@ -17,7 +17,7 @@ class Tower:
         self.level = 1
         self.selected = False
         #define menu and buttons
-        self.menu = Menu(self, self.x, self.y, menu_bg, [2000, "MAX"])
+        self.menu = Menu(self, self.x, self.y, menu_bg, [1500, "MAX"])
         self.menu.add_btn(upgrade_btn,"Upgrade")
         self.menu.add_btn(delete_btn,"delete")
         self.tower_imgs = []
@@ -69,18 +69,15 @@ class Tower:
                 return True
         return False
 
-    def sell(self):
-        del(self)
 
 
     def upgrade(self):
         if self.level < len(self.tower_imgs):
             self.level += 1
-            self.damage += 1
+            self.damage = self.damage*1.2
 
 
     def get_ugrade_cost(self):
-
         return self.price[self.level - 1]
 
     def get_delete_sell(self):
@@ -92,7 +89,6 @@ class Tower:
         self.menu.x = x
         self.menu.y = y
         self.menu.update()
-
 
     def collide(self, otherTower):
         width = otherTower.width

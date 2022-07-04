@@ -23,5 +23,6 @@ class WizardTower(AttackTower):
         self.range = 150
         self.original_range = self.range
         self.damage = 15
+        self.price=[300,500,1000]
         self.original_damage = self.damage
         self.name = "wizard"

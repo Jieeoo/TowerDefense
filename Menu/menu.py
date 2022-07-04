@@ -13,6 +13,7 @@ class Button:
         self.menu=menu
         self.width = self.img.get_width()
         self.height = self.img.get_height()
+
     def click(self, X, Y):
         """
         Devuelve si la posición tiene colisión con el menu
@@ -20,14 +21,12 @@ class Button:
         :param Y: int
         :return: bool
         """
-
-
         if X <= self.x +self.width and X >= self.x:
             print(True)
             if Y <= self.y +self.height and Y >=self.y:
-
                 return True
         return False
+
     def draw(self, win):
         win.blit(self.img, (self.x,self.y))
 
@@ -68,7 +67,6 @@ class VerticalButton(Button):
         self.cost = cost
 
 
-
 class Menu:
     """
     menu para selecionar items
@@ -94,7 +92,7 @@ class Menu:
         """
 
         self.items += 1
-        self.buttons.append(Button(self,img,name))
+        self.buttons.append(Button(self, img, name))
 
 
 
@@ -104,8 +102,6 @@ class Menu:
         :return: int
         """
         return self.item_cost[self.tower.level-1]
-
-
 
     def draw(self, win):
         """
@@ -118,15 +114,13 @@ class Menu:
             if item.name == "Upgrade":
                 win.blit(self.bg, (self.x + 30, self.y - 20))
                 item.draw(win)
-                win.blit(coin, (item.x + item.width +25, item.y -10))
+                win.blit(coin, (item.x + item.width + 25, item.y -10))
                 text = self.font.render(str(self.item_cost[self.tower.level-1]),1,(255,255,255))
-                win.blit(text, (item.x +item.width + 25, item.y + coin.get_height()-10))
+                win.blit(text, (item.x + item.width + 25, item.y + coin.get_height()-10))
             elif item.name == "delete":
-
-
                 item.draw(win)
 
-    def get_clicked(self, X, Y):
+    def get_clicked(self, x, y):
         """
         devuelve el item clicado en el menu
         :param X: int
@@ -134,7 +128,7 @@ class Menu:
         :return: bool
         """
         for btn in self.buttons:
-            if btn.click(X,Y):
+            if btn.click(x,y):
 
                 return btn.name
 
