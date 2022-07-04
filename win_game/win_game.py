@@ -8,7 +8,8 @@ pygame.init()
 
 
 restart_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/win_game", "restart.png")),(185,185))
-you_lose = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/win_game","you_win.png")),(800,200))
+you_win = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/win_game", "you_win.png")), (800, 200))
+confetti =  pygame.transform.scale(pygame.image.load(os.path.join("game_assets/win_game", "confetti.gif")), (Settings.width, Settings.height))
 
 
 class WinGame:
@@ -20,6 +21,8 @@ class WinGame:
         self.win = pygame.display.set_mode((self.width, self.height))
         self.re_btn = (self.width / 2 - restart_btn.get_width() / 2, self.height / 2 - restart_btn.get_height() / 2,
                        restart_btn.get_width(), restart_btn.get_height())
+
+
 
 
 
@@ -52,9 +55,15 @@ class WinGame:
 
 
 
+
+
     def draw(self):
         self.win.blit(self.bg, (0,0))
+        self.win.blit(confetti, (0, 0))
         self.win.blit(restart_btn, (self.re_btn[0], self.re_btn[1]+50))
-        self.win.blit(you_lose, (self.width / 2 - you_lose.get_width() / 2, self.height / 2 - you_lose.get_height() / 2 - self.height/5))
+        self.win.blit(you_win, (self.width / 2 - you_win.get_width() / 2, self.height / 2 - you_win.get_height() / 2 - self.height / 5))
+
 
         pygame.display.update()
+
+
