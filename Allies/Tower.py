@@ -5,6 +5,7 @@ import math
 
 menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
 upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","upgrade.png")), (50,50))
+delete_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","delete.png")),(50,50))
 class Tower:
     def __init__(self, x, y):
         self.x = x
@@ -18,18 +19,24 @@ class Tower:
         #define menu and buttons
         self.menu = Menu(self, self.x, self.y, menu_bg, [2000, "MAX"])
         self.menu.add_btn(upgrade_btn,"Upgrade")
-
+        self.menu.add_btn(delete_btn,"delete")
         self.tower_imgs = []
         self.damage = 1
         self.place_color = (0,255,0,100)
 
+        self.delet=False
+
+
+
     def draw(self, win):
+
         img = self.tower_imgs[self.level-1]
         win.blit(img, (self.x - img.get_width() // 2, self.y - img.get_height() // 2))
 
         #Draw menu
         if self.selected:
             self.menu.draw(win)
+
 
     def draw_radius(self, win):
         if self.selected:
@@ -63,8 +70,8 @@ class Tower:
         return False
 
     def sell(self):
+        del(self)
 
-        return self.sell_price[self.level - 1]
 
     def upgrade(self):
         if self.level < len(self.tower_imgs):
@@ -76,12 +83,16 @@ class Tower:
 
         return self.price[self.level - 1]
 
+    def get_delete_sell(self):
+        return self.price[self.level-1]
+
     def move(self, x, y):
         self.x = x
         self.y = y
         self.menu.x = x
         self.menu.y = y
         self.menu.update()
+
 
     def collide(self, otherTower):
         x2 = otherTower.x

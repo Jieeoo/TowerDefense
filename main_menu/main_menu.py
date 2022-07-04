@@ -1,6 +1,7 @@
 import Settings
 from main import Game
 import pygame
+from pygame.locals import *
 import os
 pygame.init()
 
@@ -27,6 +28,8 @@ class MainMenu:
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    run = False
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     run = False
 
                 if event.type == pygame.MOUSEBUTTONUP:
