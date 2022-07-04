@@ -7,6 +7,7 @@ from Menu.menu import Menu
 
 menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","menu.png")), (200,100))
 upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","upgrade.png")), (50,50))
+delete_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/Menu","delete.png")),(50,50))
 
 class AttackTower(Tower):
     def __init__(self, x, y):
@@ -23,12 +24,17 @@ class AttackTower(Tower):
         self.damage = 0
         self.moving = False
         self.original_damage = 0
+        self.price=[1,1,1]
         self.menu = Menu(self, self.x, self.y, menu_bg, [3500, 7000, "MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
+        self.menu.add_btn(delete_btn,"delete")
         self.name = ""
+
 
     def get_upgrade_cost(self):
         return self.menu.get_item_cost()
+
+
 
     def draw(self, win,pause):
         super().draw_radius(win)
@@ -42,7 +48,6 @@ class AttackTower(Tower):
                 self.animation_count = 0
         else:
             self.animation_count = 0
-        print(self.animation_count)
         character = self.trop_imgs[self.animation_count]
         if self.left == True:
             add = -25

@@ -2,7 +2,7 @@ import pygame.display
 import os
 import math
 from Allies.Tower import Tower
-
+from pygame.locals import *
 import Settings
 from Enemies.orc import Orc
 from Enemies.Ent import Ent
@@ -139,9 +139,6 @@ class Game:
                         tower.place_color = (0, 255, 0, 100)
                         if not collide:
                             self.moving_object.place_color = ((0, 255, 0, 100))
-
-
-            if self.moving_object:
                 self.moving_object.move(pos[0],pos[1])
                 obs = self.obstacle
                 collide = False
@@ -155,17 +152,19 @@ class Game:
 
 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == K_ESCAPE :
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
                     pygame.mixer.music.play(loops=-1)
                     run = False
 
+
                 pos = pygame.mouse.get_pos()
+                tower_list = self.attack_towers[:] + self.support_towers[:]
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.moving_object:
                         not_allowed = False
-                        tower_list = self.attack_towers[:] + self.support_towers[:]
+
                         for tower in tower_list:
                             if tower.collide(self.moving_object):
                                 not_allowed = True
@@ -212,6 +211,16 @@ class Game:
                                     elif self.money >= cost:
                                         self.money -= cost
                                         self.selected_tower.upgrade()
+                                elif btn_clicked == "delete":
+                                    sell = self.selected_tower.get_delete_sell()
+                                    print(sell)
+                                    self.money += sell
+                                    self.selected_tower.delet = True
+                                    self.attack_towers.remove(self.selected_tower)
+
+
+
+
 
 
 
@@ -242,9 +251,15 @@ class Game:
                     self.enemys.remove(d)
                 for tw in self.attack_towers:
                     self.money += tw.attack(self.enemys)
+                    if tw.delet:
+
+                        self.attack_towers.remove(tw)
 
                 for tw in self.support_towers:
                     tw.support(self.attack_towers)
+                    if tw.delet:
+
+                        self.support_towers.remove(tw)
 
                 if self.lives <= 0:
                     print("You lose")
@@ -271,11 +286,6 @@ class Game:
         return True
 
 
-
-
-
-
-
     def draw(self):
         self.win.blit(self.bg, (0,0))
 
@@ -298,16 +308,20 @@ class Game:
 
         #draw attack towers
         for tw in self.attack_towers:
-            tw.draw(self.win,self.pause)
+            if not tw.delet:
+                tw.draw(self.win,self.pause)
 
         # draw support towers
         for tw in self.support_towers:
-            tw.draw(self.win,self.pause)
+            if not tw.delet:
+                tw.draw(self.win,self.pause)
         self.Menu.draw(self.win)
+
 
         # redraw selected tower
         if self.selected_tower:
-            self.selected_tower.draw(self.win,self.pause)
+            if not self.selected_tower.delet:
+                self.selected_tower.draw(self.win,self.pause)
 
         if self.moving_object:
             self.moving_object.draw(self.win,self.pause)
