@@ -86,3 +86,4 @@ class AttackTower(Tower):
                 for x, img in enumerate(self.trop_imgs):
                     self.trop_imgs[x] = pygame.transform.flip(img, True, False)
         return money
+print()
