@@ -15,6 +15,7 @@ from Allies.TrebuchetteTower import TrebuchetteTower
 from Menu.menu import VerticalMenu, PlayPauseButton
 from Obstaculo import obstaculo
 from lost_game.lost_game import LostGame
+from win_game.win_game import WinGame
 import Unit
 import time
 import random
