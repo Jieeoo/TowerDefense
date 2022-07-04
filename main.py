@@ -144,6 +144,7 @@ class Game:
                         tower.place_color = (0, 255, 0, 100)
                         if not collide:
                             self.moving_object.place_color = ((0, 255, 0, 100))
+
                 self.moving_object.move(pos[0],pos[1])
                 obs = self.obstacle
                 collide = False

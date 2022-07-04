@@ -52,7 +52,7 @@ class Tower:
         surface = pygame.Surface((self.range * 4, self.range * 4), pygame.SRCALPHA, 32)
         pygame.draw.circle(surface, self.place_color, (64, 64), 64, 0)
 
-        win.blit(surface, (self.x-50, self.y-50))
+        win.blit(surface, (self.x-64, self.y-64))
 
 
     def click(self, X, Y):
@@ -95,11 +95,13 @@ class Tower:
 
 
     def collide(self, otherTower):
+        width = otherTower.width
+        height = otherTower.height
         x2 = otherTower.x
         y2 = otherTower.y
 
-        dis = math.sqrt((x2 - self.x)**2 + (y2 -self.y)**2)
-        if dis >= 100:
+        dis = math.sqrt((((x2+width/2) - (self.x+self.width/2))**2 + ((y2+height) -(self.y+self.height))**2))
+        if dis >= 128:
             return False
         else:
             return True

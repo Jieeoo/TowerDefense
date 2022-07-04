@@ -17,6 +17,8 @@ bg = pygame.transform.scale(bg, (W, H))
 class obstaculo():
     def __init__(self):
         self.color=(255,0,0,100)
+        self.width=64
+        self.height=64
 
     def draw(self,win,obs):
 
