@@ -128,27 +128,10 @@ class Game:
             if self.moving_object:
                 self.moving_object.move(pos[0], pos[1])
                 tower_list = self.attack_towers[:] + self.support_towers[:]
-                collide = False
-                for tower in tower_list:
-                    if tower.collide(self.moving_object):
-                        collide = True
-                        tower.place_color = (255, 0, 0, 100)
-                        self.moving_object.place_color = ((255, 0, 0, 100))
-                    else:
-                        tower.place_color = (0, 255, 0, 100)
-                        if not collide:
-                            self.moving_object.place_color = ((0, 255, 0, 100))
-
-                self.moving_object.move(pos[0], pos[1])
                 obs = self.obstacle
                 collide = False
-                for thing in obs:
-                    if obstaculo.collide(self.moving_object, thing):
-                        collide = True
-                        self.moving_object.place_color = ((255, 0, 0, 100))
-                    else:
-                        if not collide:
-                            self.moving_object.place_color = ((0, 255, 0, 100))
+                self.tower_collide(tower_list,collide)
+                self.obs_collide(obs,collide)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -180,10 +163,10 @@ class Game:
 
                     else:
                         if self.PlayPauseButton.click(pos[0], pos[1]):
-                            self.pause = not (self.pause)
+                            self.pause = not self.pause
                             self.PlayPauseButton.paused = self.pause
-                        if self.SoundButton.click(pos[0], pos[1]):
-                            self.music_on = not (self.music_on)
+                        elif self.SoundButton.click(pos[0], pos[1]):
+                            self.music_on = not self.music_on
                             self.SoundButton.paused = self.music_on
                             if self.music_on:
                                 pygame.mixer.music.unpause()
@@ -258,12 +241,32 @@ class Game:
                     LG = LostGame()
                     LG.run()
                     run = False
-                if self.wave >= len(waves):
+                elif self.wave >= len(waves):
                     WinGame().run()
                     self.wave = 0
                     run = False
 
             self.draw()
+
+    def tower_collide(self,tower_list,collide):
+        for tower in tower_list:
+            if tower.collide(self.moving_object):
+                collide = True
+                tower.place_color = (255, 0, 0, 100)
+                self.moving_object.place_color = ((255, 0, 0, 100))
+            else:
+                tower.place_color = (0, 255, 0, 100)
+                if not collide:
+                    self.moving_object.place_color = ((0, 255, 0, 100))
+
+    def obs_collide(self,obs,collide):
+        for thing in obs:
+            if obstaculo.collide(self.moving_object, thing):
+                collide = True
+                self.moving_object.place_color = ((255, 0, 0, 100))
+            else:
+                if not collide:
+                    self.moving_object.place_color = ((0, 255, 0, 100))
 
     def point_to_line(self, tower):
         """

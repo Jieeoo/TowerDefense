@@ -35,21 +35,18 @@ class AttackTower(Tower):
     def draw(self, win,pause):
         super().draw_radius(win)
         super().draw(win)
-        if self.animation_count >= len(self.trop_imgs):
-            self.animation_count = 0
+        self.character_animation(pause)
+        character = self.trop_imgs[self.animation_count]
+        win.blit(character, ((self.x) - (character.get_width() / 2), (self.y - character.get_height())))
 
+    def character_animation(self,pause):
         if self.inRange and not self.moving and not pause:
             self.animation_count += 1
             if self.animation_count >= len(self.trop_imgs):
                 self.animation_count = 0
         else:
             self.animation_count = 0
-        character = self.trop_imgs[self.animation_count]
-        if self.left == True:
-            add = -25
-        else:
-            add = character.get_width() / 2
-        win.blit(character, ((self.x) - (character.get_width() / 2), (self.y - character.get_height())))
+
 
     def change_range(self, r):
         self.range = r
@@ -72,18 +69,19 @@ class AttackTower(Tower):
         if len(enemy_closest) > 0:
             first_enemy = enemy_closest[0]
             if self.animation_count == 8:
-
                 if first_enemy.hit(self.damage) == True:
                     money = first_enemy.money
                     enemies.remove(first_enemy)
-
-            if first_enemy.pos[0] < self.x and not (self.left):
-                self.left = True
-                for x, img in enumerate(self.trop_imgs):
-                    self.trop_imgs[x] = pygame.transform.flip(img, True, False)
-            elif self.left and first_enemy.pos[0] > self.x:
-                self.left = False
-                for x, img in enumerate(self.trop_imgs):
-                    self.trop_imgs[x] = pygame.transform.flip(img, True, False)
+            self.flip(first_enemy)
         return money
-print()
+
+    def flip(self, first_enemy):
+        if first_enemy.pos[0] < self.x and not (self.left):
+            self.left = True
+            for x, img in enumerate(self.trop_imgs):
+                self.trop_imgs[x] = pygame.transform.flip(img, True, False)
+        elif self.left and first_enemy.pos[0] > self.x:
+            self.left = False
+            for x, img in enumerate(self.trop_imgs):
+                self.trop_imgs[x] = pygame.transform.flip(img, True, False)
+
