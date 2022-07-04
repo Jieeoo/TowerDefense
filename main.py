@@ -48,10 +48,10 @@ support_tower_name = ["range", "damage"]
 waves = [
     [10, 0, 0, 0],
     [15, 4, 0, 0],
-    [20, 8, 3, 0],
-    [0, 10, 5, 0],
-    [0, 20, 15, 1],
-    [30, 25, 20, 3],
+    [20, 8, 5, 0],
+    [0, 14, 10, 1],
+    [12, 20, 15, 3],
+    [30, 25, 20, 5],
 
 ]
 
@@ -194,6 +194,7 @@ class Game:
                                         self.selected_tower.upgrade()
                                 elif btn_clicked == "delete":
                                     sell = self.selected_tower.get_delete_sell()
+                                    print(sell)
                                     self.money += sell
                                     self.selected_tower.delet = True
                                     if self.selected_tower.name in attack_tower_name:
