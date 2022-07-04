@@ -22,7 +22,6 @@ class Button:
         :return: bool
         """
         if X <= self.x +self.width and X >= self.x:
-            print(True)
             if Y <= self.y +self.height and Y >=self.y:
                 return True
         return False
