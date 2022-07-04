@@ -25,7 +25,7 @@ class AttackTower(Tower):
         self.moving = False
         self.original_damage = 0
         self.price=[1,1,1]
-        self.menu = Menu(self, self.x, self.y, menu_bg, [3500, 7000, "MAX"])
+        self.menu = Menu(self, self.x, self.y, menu_bg, [1250, 2500, "MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
         self.menu.add_btn(delete_btn,"delete")
         self.name = ""

@@ -13,5 +13,6 @@ class Dragon(Unit):
         self.name = "Dragon"
         self.money = 50
         self.max_health = 200
+        self.vel=25
         self.health = self.max_health
         self.imgs = imgs[:]

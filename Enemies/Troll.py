@@ -12,6 +12,7 @@ class Troll(Unit):
         self.name = "troll"
         self.money = 100
         self.max_health = 200
+        self.vel=5
         self.health = self.max_health
         self.imgs = imgs[:]
         self.alt = -30

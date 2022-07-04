@@ -14,7 +14,8 @@ class Ent(Unit):
         super() .__init__()
         self.name = "ent"
         self.money = 50
-        self.max_health = 50
+        self.max_health = 75
+        self.vel=8
         self.health = self.max_health
         self.imgs = imgs[:]
 

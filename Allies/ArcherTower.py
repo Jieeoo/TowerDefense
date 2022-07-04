@@ -24,4 +24,5 @@ class ArcherTower(AttackTower):
         self.original_damage = self.damage
         self.width = 90
         self.height = 90
+        self.price=[250,500,1000]
         self.name = "archer"

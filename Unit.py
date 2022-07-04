@@ -56,7 +56,7 @@ class Unit:
 
 
 
-    def collide(self, x, y):
+    def collide(self, X, Y):
         """
         Returns if position has hit enemy
         :param x: int
@@ -69,44 +69,8 @@ class Unit:
         return False
 
     def move(self):
-        
-        """Move enemy
-        :return: None
 
-
-        x1,y1 = self.path[self.path_pos]
-        if self.path_pos + 1 >= len(self.path):
-            x2, y2 = (-10,155)
-        else:
-            x2, y2 = self.path[self.path_pos+1]
-
-        move_dis=math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        self.move_count += 1
-
-        dirn = (x2-x1, y2-y1)
-        if dirn[0] > 0 and not(self.flipped):
-            self.flipped = True
-            for x, img in enumerate(self.imgs):
-                self.imgs[x] = pygame.transform.flip(img,True,False)
-
-
-        move_x, move_y = (self.x + dirn[0] * self.move_count,self.y + dirn[1] * self.move_count)
-        self.dis += math.sqrt((move_x - x1) ** 2 + (move_y - y1) ** 2)
-        self.x = move_x
-        self.y = move_y
-        if self.dis >= move_dis:
-            self.dis = 0
-            self.move_count = 0
-            self.path_pos += 1
-            if self.path_pos >= len(self.path):
-                return False
-
-
-        return True
-        """
-        self.animation_count += 1
-        if self.animation_count >= len(self.imgs):
-            self.animation_count = 0
+        self.update_animation()
         pore = self.path[0]
         dir = pygame.math.Vector2(pore) - self.pos
         if dir.length() <= self.vel:
@@ -118,7 +82,14 @@ class Unit:
             new_pos = pygame.math.Vector2(self.pos) + dir
             pos = (new_pos.x, new_pos.y)
         self.pos=pos
+        self.flip(pos)
 
+    def update_animation(self):
+        self.animation_count += 1
+        if self.animation_count >= len(self.imgs):
+            self.animation_count = 0
+
+    def flip(self,pos):
         if pos[0] == W/3.3 and pos[1] >= H/7 and not(self.flipped_1):
             self.flipped_1 = True
             for x, img in enumerate(self.imgs):

@@ -13,6 +13,7 @@ class Orc(Unit):
         self.name = "orc"
         self.money = 20
         self.max_health = 50
+        self.vel=10
         self.health = self.max_health
         self.imgs = imgs[:]
 

@@ -49,12 +49,12 @@ support_tower_name=["range","damage"]
 
 
 waves = [
-    [1, 1, 1,1],
-    [50, 0, 0, 0],
-    [100,0,0, 0],
-    [50,20,0, 0],
-    [20,50, 0, 1],
-    [50, 0,20, 2],
+    [0, 0, 0,0],
+    [0, 0, 0, 0],
+    [0,0,0, 0],
+    [0,0,0, 0],
+    [0,0, 0, 0],
+    [0, 0,0, 0],
 
 ]
 obstacle=[]
@@ -99,9 +99,14 @@ class Game:
         if sum(self.current_wave) == 0:
             if len(self.enemys) == 0:
                 self.wave += 1
-                self.current_wave = waves[self.wave]
-                self.pause = True
-                self.PlayPauseButton.paused = self.pause
+                if self.wave < len(waves):
+                    self.current_wave = waves[self.wave]
+                    self.pause = True
+                    self.PlayPauseButton.paused = self.pause
+
+
+
+
         else:
             wave_enemies = [Orc(), Ent(), Troll(), Dragon()]
             for x in range(len(self.current_wave)):
@@ -152,7 +157,7 @@ class Game:
 
 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == K_ESCAPE :
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
                     pygame.mixer.music.play(loops=-1)
@@ -266,6 +271,11 @@ class Game:
                     LG = LostGame()
                     LG.run()
                     run = False
+                if self.wave >= len(waves):
+                    WinGame().run()
+                    self.wave = 0
+                    run = False
+
 
             self.draw()
 

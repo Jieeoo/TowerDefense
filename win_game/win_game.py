@@ -1,6 +1,8 @@
 import Settings
+from pygame.locals import *
 import pygame
 import os
+
 
 pygame.init()
 
@@ -20,6 +22,7 @@ class WinGame:
                        restart_btn.get_width(), restart_btn.get_height())
 
 
+
     def run(self):
         pygame.mixer.music.load(os.path.join("game_assets/win_game", "win_music.mp3"))
         pygame.mixer.music.play(loops = -1)
@@ -27,7 +30,7 @@ class WinGame:
 
         while run:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(os.path.join("game_assets/main_menu", "Title_music.mp3"))
                     pygame.mixer.music.play(loops=-1)
